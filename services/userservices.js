@@ -28,6 +28,7 @@ export const update = async (user) => {
 };
 
 export const deleteById = async (id) => {
+  console.log(id)
   const User = models.User;
   const user = await User.findById({ _id: id });
   if (user) {
