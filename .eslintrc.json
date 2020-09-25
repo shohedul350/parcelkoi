@@ -13,6 +13,10 @@
     "rules": {
         "no-console":"off",
         "no-underscore-dangle":"off",
-        "prefer-destructuring":"off"
+        "prefer-destructuring":"off",
+        "import/prefer-default-export":"off",
+        "max-classes-per-file":"off",
+        "class-methods-use-this":"off"
+    
     }
 }
