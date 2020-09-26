@@ -5,31 +5,46 @@ import {
 
 const router = express.Router();
 
-const getHandler = async (req, res) => {
-  const users = await getAllUsers();
-  res.status(200).send(users);
+const getHandler = async (req, res, next) => {
+  try {
+    const users = await getAllUsers();
+    return res.status(200).send(users);
+  } catch (error) {
+    return next(error, req, res);
+  }
 };
 
-const postHandler = async (req, res) => {
-  const body = req.body;
-  const user = await saveUser(body);
-  res.status(201).send(user._id);
+const postHandler = async (req, res, next) => {
+  try {
+    const body = req.body;
+    const user = await saveUser(body);
+    return res.status(201).send(user._id);
+  } catch (error) {
+    return next(error, req, res);
+  }
 };
 
-const putHandler = async (req, res) => {
-  const body = req.body;
-  const user = await update(body);
-  res.status(200).send(user._id);
+const putHandler = async (req, res, next) => {
+  try {
+    const body = req.body;
+    const user = await update(body);
+    return res.status(201).send(user._id);
+  } catch (error) {
+    return next(error, req, res);
+  }
 };
 
-const deleteHandler = async (req, res) => {
-  const id = req.params.id;
-  const result = await deleteById(id);
-  if (result instanceof Error) {
-    const code = result.getCode();
-    res.status(code).send(result.message);
-  } else {
-    res.status(200).send('User deleted');
+const deleteHandler = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const result = await deleteById(id);
+    if (result instanceof Error) {
+      return next(result, req, res);
+    } else {
+      return res.status(200).send('User deleted');
+    }
+  } catch (error) {
+    return next(error, req, res);
   }
 };
 

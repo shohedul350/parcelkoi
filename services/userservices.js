@@ -24,16 +24,16 @@ export const update = async (user) => {
     model.save();
     return model;
   }
-  return null;
+  throw new NotFound(`User not found by the is:${id}`);
 };
 
 export const deleteById = async (id) => {
-  console.log(id)
   const User = models.User;
-  const user = await User.findById({ _id: id });
+  const user = await User.findById(id);
+
   if (user) {
     const result = await User.deleteOne({ _id: id });
     return result;
   }
-  return new NotFound(`User not found by the is:${id}`);
+  throw new NotFound(`User not found by the is:${id}`);
 };
