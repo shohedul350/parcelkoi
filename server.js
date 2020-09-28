@@ -56,6 +56,10 @@ const fileErrorTransport = new (winston.transports.DailyRotateFile)(
     datePattern: 'yyyy-MM-DD-HH',
   },
 );
+const mongoErrorTransport = new winston.transports.MongoDB({
+  db: process.env.MONGO_URI,
+  metaKey: 'meta',
+});
 
 // info logger
 const infoLogger = expressWinston.logger({
@@ -76,6 +80,7 @@ const errorLogger = expressWinston.errorLogger({
   transports: [
     new winston.transports.Console(),
     fileErrorTransport,
+    mongoErrorTransport,
 
   ],
   format: winston.format.combine(winston.format.colorize(), winston.format.json()),
